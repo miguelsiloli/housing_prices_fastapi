@@ -1,0 +1,6 @@
+# Group by municipality, parish, and neighborhood
+grouped = df.groupby(['municipality', 'parish', 'neighborhood']).agg({
+    'home_area': ['mean', 'median', 'std', 'min', 'max'],
+    'price': ['mean', 'median', 'std', 'min', 'max'],
+    'price_per_sqr_meter': ['mean', 'median', 'std', 'min', 'max']
+}).reset_index()l

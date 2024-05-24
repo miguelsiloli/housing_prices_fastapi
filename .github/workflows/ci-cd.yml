@@ -22,13 +22,14 @@ jobs:
       - name: Run tests
         run: |
           # Run the tests in fastapi_test.py
-          # python -m pytest fastapi_test.py
-
+          python -m pytest fastapi_test.py
+          
+"""
       - name: Build and push Docker image
         run: |
           docker build -t myfastapiapp .
           docker tag myfastapiapp:latest
-"""
+
   deploy:
     needs: build
     runs-on: ubuntu-latest

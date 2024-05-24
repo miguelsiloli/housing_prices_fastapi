@@ -1,7 +1,5 @@
 import pandas as pd
 
-data = pd.read_parquet("data/raw/house_price_data_20-05-2024.parquet")
-
 # very simp
 def filter_group(group):
     # Calculate quantiles within each group
@@ -16,6 +14,8 @@ def filter_group(group):
     return final_filtered_group
 
 if __name__ == "__main__":
+
+    data = pd.read_parquet("data/raw/house_price_data_20-05-2024.parquet")
     # make idempotent functions
     data = data.drop_duplicates()
     # further clean up some columns

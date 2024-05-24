@@ -7,6 +7,7 @@ from fastapi import FastAPI, HTTPException
 import os
 from api.services.data_service import DataService
 from api.services.model_service import ModelService
+from mangum import Mangum
 
 model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'models', 'model.joblib'))
 data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'processed', 'house_price_data_20-05-2024.parquet'))
@@ -27,15 +28,13 @@ class HouseFeatures(BaseModel):
     home_area: float
 
 def preprocess_input(data: Dict) -> pd.DataFrame:
-    df = pd.DataFrame([data])
+    df = pd.DataFrame(data)
     for col in df.columns:
         if df[col].dtype == 'object' or df[col].dtype == 'bool' or df[col].dtype == 'string':
             df[col] = df[col].astype('category')
     return df
 
-
 app = FastAPI()
-
 
 @app.post("/predict")
 async def predict(features: HouseFeatures):
@@ -46,7 +45,7 @@ async def predict(features: HouseFeatures):
         return {"prediction": prediction[0]}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    
+
 @app.get("/features")
 async def get_unique_features():
     try:
@@ -55,3 +54,9 @@ async def get_unique_features():
         return unique_values
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+handler = Mangum(app)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
