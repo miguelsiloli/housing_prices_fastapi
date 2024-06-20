@@ -1,6 +1,6 @@
 ## Structure
 ```
-my_ml_project/
+housing_algo/
 ├── data/
 │   ├── raw/                     # Raw data files
 │   ├── processed/               # Processed data files
