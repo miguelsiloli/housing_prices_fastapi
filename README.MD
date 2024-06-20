@@ -1,5 +1,5 @@
 ## Structure
-´´´
+```
 my_ml_project/
 ├── data/
 │   ├── raw/                     # Raw data files
@@ -33,4 +33,4 @@ my_ml_project/
 ├── requirements.txt             # Python dependencies
 ├── README.md                    # Project description
 └── .gitignore                   # Git ignore file
-´´´
+```
